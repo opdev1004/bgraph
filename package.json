@@ -1,0 +1,35 @@
+{
+  "name": "bgraph",
+  "version": "1.0.0",
+  "description": "B-Graph. B-Tree that can perform ranged search.",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node ./test/test-bgraph.js",
+    "pack": "npx webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opdev1004/bgraph.git"
+  },
+  "keywords": [
+    "B-Tree",
+    "BTree",
+    "B-Graph",
+    "BGraph",
+    "Database"
+  ],
+  "author": "Victor Chanil Park",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/opdev1004/bgraph/issues"
+  },
+  "homepage": "https://github.com/opdev1004/bgraph#readme",
+  "devDependencies": {
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
