@@ -5,29 +5,34 @@ function getBinarySize(string) {
     return Buffer.byteLength(string, 'utf8');
 }
 
-async function test()
+function test()
 {
+    
     console.time("BGraph");
-    const bgraph = new BGraph();
-    await bgraph.insert("a", "a");
-    await bgraph.insert("b", "b");
-    await bgraph.insert("c", "c");
-    await bgraph.insert("d", "d");
-    await bgraph.insert("e", "e");
-    await bgraph.insert("f", "f");
-    await bgraph.delete("a");
-    await bgraph.delete("f");
-    await bgraph.insert("g", "g");
+    const option = {
+        order: 5
+    }
+    const bgraph = new BGraph(option);
+    console.log(bgraph.order);
+    bgraph.insert("a", "a");
+    bgraph.insert("b", "b");
+    bgraph.insert("c", "c");
+    bgraph.insert("d", "d");
+    bgraph.insert("e", "e");
+    bgraph.insert("f", "f");
+    bgraph.delete("a");
+    bgraph.delete("f");
+    bgraph.insert("g", "g");
     let serializedGraph = bgraph.serialize();
-    await bgraph.insert("h", "h");
-    await bgraph.insert("i", "i");
-    await bgraph.insert("j", "j");
-    await bgraph.insert("k", "k");
-    await bgraph.insert("l", "l");
-    await bgraph.insert("m", "m");
-    await bgraph.insert("n", "n");
-    await bgraph.insert("o", "o");
-    await bgraph.delete("o");
+    bgraph.insert("h", "h");
+    bgraph.insert("i", "i");
+    bgraph.insert("j", "j");
+    bgraph.insert("k", "k");
+    bgraph.insert("l", "l");
+    bgraph.insert("m", "m");
+    bgraph.insert("n", "n");
+    bgraph.insert("o", "o");
+    bgraph.delete("o");
 
     bgraph.deserialize(serializedGraph);
 
@@ -51,6 +56,20 @@ async function test()
     }
 
     console.timeEnd("BGraph");
+    
+    const bgraph2 = new BGraph({order: 5});
+
+    for(let i = 0; i < 100; i++)
+    {
+        let key = makeid(255);
+        let value = makeid(16);
+        bgraph2.insert(key, value);
+    }
+
+    let serializedBgraph2 = bgraph2.serialize();
+    
+    console.log(serializedBgraph2 == bgraph2.serialize(bgraph2.deserialize(serializedBgraph2)));
+    console.log(getBinarySize(serializedBgraph2));
 }
 
 

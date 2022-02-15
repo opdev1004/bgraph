@@ -3,12 +3,13 @@ const BGraphNode = require('./bgraphnode.js');
 const ListNode = require('./listnode.js');
 
 module.exports = class BGraph {
-    constructor(option={size:0, height: 1, order: 3}) {
+    constructor(option={order: 3}) {
         this.root;
         this.start;
+        this.end;
         this.order = option.order;
-        this.size = option.size;
-        this.height = option.height;
+        this.size = 0;
+        this.height = 1;
     }
 
     search(key)
@@ -111,8 +112,8 @@ module.exports = class BGraph {
 
     insert(key, value)
     {
-        if(!key || !value) return false;
-    
+        if(!key || !value || this.size === Number.MAX_SAFE_INTEGER) return false;
+
         let data = new BGraphData();
         data.key = key;
 
@@ -142,6 +143,7 @@ module.exports = class BGraph {
                 if(dataList.length == 0)
                 {
                     this.start = newListNode;
+                    this.end = newListNode;
                     data.ref = this.start;
                 }
                 else if(pos >= dataList.length)
@@ -157,6 +159,7 @@ module.exports = class BGraph {
                         nextListNode.prev = newListNode;
                         newListNode.next = nextListNode;
                     }
+                    else this.end = newListNode;
                     
                     data.ref = newListNode;
                 }
@@ -164,9 +167,14 @@ module.exports = class BGraph {
                 {
                     let nextListNode = dataList[pos].ref;
                     let prevListNode = nextListNode.prev;
-                    prevListNode.next = newListNode;
+
+                    if(prevListNode !== undefined)
+                    {
+                        prevListNode.next = newListNode;
+                        newListNode.prev = prevListNode;
+                    }
+
                     nextListNode.prev = newListNode;
-                    newListNode.prev = prevListNode;
                     newListNode.next = nextListNode;
                     data.ref = newListNode;
                 }
@@ -222,7 +230,7 @@ module.exports = class BGraph {
             let rightNodeDataList = rightNode.dataList;
             let rightNodeChildren = rightNode.children;
             let t = Math.ceil(order / 2);
-    
+
             for(let i = t; i < order; i++)
             {
                 this.addData(this.removeData(t, dataList), rightNodeDataList);
@@ -234,11 +242,9 @@ module.exports = class BGraph {
             }
     
             let children = node.children;
-            let childrenSize = children.length;
-            let half = Math.ceil(childrenSize/2);
 
-            if(childrenSize != 0){
-                for(let i = 0; i < half; i++)
+            if(children.length != 0){
+                for(let i = 0; i < leftNodeDataList.length + 1; i++)
                 {
                     this.addChild(this.removeChild(0, children), i, leftNodeChildren);
                 }
@@ -283,6 +289,8 @@ module.exports = class BGraph {
             if(!child.isLeaf){
                 let childrenSize = child.children.length;
                 let half = Math.ceil(childrenSize/2);
+                
+                if(order % 2 == 0) half -= 1;
 
                 for(let i = half; i < childrenSize; i++)
                 {
@@ -497,7 +505,8 @@ module.exports = class BGraph {
         }
         else prevListNode.next = nextListNode;
 
-        if(nextListNode !== undefined) nextListNode.prev = prevListNode;
+        if(nextListNode === undefined) this.end = prevListNode;
+        else nextListNode.prev = prevListNode;
     }
 
     getDataPos(data, dataList)
@@ -562,9 +571,13 @@ module.exports = class BGraph {
 
         for(let i = 1; i < size; i++)
         {
+            if(listNode === undefined) break;
+
             tracker.key = listNode.key;
             tracker.value = listNode.value;
+
             if(i < size - 1) tracker.next = {};
+
             tracker = tracker.next;
             listNode = listNode.next;
         }
@@ -586,15 +599,18 @@ module.exports = class BGraph {
         this.height = data.height;
         this.start = data.list;
         this.root = data.btree;
-        let tempNode = this.start;
+        let listNode = this.start;
         let prevNode = undefined;
 
         for(let i = 0; i < this.size; i++)
         {
-            tempNode.prev = prevNode;
-            this.connectRef(tempNode);
-            prevNode = tempNode;
-            tempNode = tempNode.next;
+            listNode.prev = prevNode;
+            this.connectRef(listNode);
+
+            if(listNode.next === undefined) this.end = listNode;
+            
+            prevNode = listNode;
+            listNode = listNode.next;
         }
     }
 
