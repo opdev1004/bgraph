@@ -16,7 +16,11 @@ function test()
     console.log(bgraph.order);
     bgraph.insert("a", "a");
     bgraph.insert("b", "b");
+    console.log("start: ", bgraph.start.key);
+    console.log("end: ", bgraph.end.key);
     bgraph.insert("c", "c");
+    console.log("start: ", bgraph.start.key);
+    console.log("end: ", bgraph.end.key);
     bgraph.insert("d", "d");
     bgraph.insert("e", "e");
     bgraph.insert("f", "f");
@@ -30,12 +34,20 @@ function test()
     bgraph.insert("k", "k");
     bgraph.insert("l", "l");
     bgraph.insert("m", "m");
+    console.log("start: ", bgraph.start.key);
+    console.log("end: ", bgraph.end.key);
     bgraph.insert("n", "n");
     bgraph.insert("o", "o");
+    console.log("start: ", bgraph.start.key);
+    console.log("end: ", bgraph.end.key);
+    bgraph.insert("a", "a");
     bgraph.delete("o");
-
+    console.log("start: ", bgraph.start.key);
+    console.log("end: ", bgraph.end.key);
+    
     bgraph.deserialize(serializedGraph);
 
+    
     let size = bgraph.size;
     let start = bgraph.start;
 
@@ -61,15 +73,18 @@ function test()
 
     for(let i = 0; i < 100; i++)
     {
-        let key = makeid(255);
+        let key = i.toString();
         let value = makeid(16);
         bgraph2.insert(key, value);
     }
 
     let serializedBgraph2 = bgraph2.serialize();
     
+    console.log(bgraph2.serialize());
+
     console.log(serializedBgraph2 == bgraph2.serialize(bgraph2.deserialize(serializedBgraph2)));
     console.log(getBinarySize(serializedBgraph2));
+    
 }
 
 

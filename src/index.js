@@ -139,8 +139,8 @@ module.exports = class BGraph {
             if(tempNode.isLeaf || dataList.length == 0)
             {
                 let pos = this.getDataPos(data, dataList);
-
-                if(dataList.length == 0)
+                
+                if(this.size == 0)
                 {
                     this.start = newListNode;
                     this.end = newListNode;
@@ -149,18 +149,17 @@ module.exports = class BGraph {
                 else if(pos >= dataList.length)
                 {
                     let prevListNode = dataList[pos - 1].ref;
+                    let nextListNode = prevListNode.next;
                     prevListNode.next = newListNode;
                     newListNode.prev = prevListNode;
 
-                    let nextListNode = prevListNode.next;
-
-                    if(nextListNode !== undefined)
+                    if(nextListNode !== undefined && nextListNode.key !== undefined)
                     {
                         nextListNode.prev = newListNode;
                         newListNode.next = nextListNode;
                     }
                     else this.end = newListNode;
-                    
+
                     data.ref = newListNode;
                 }
                 else
@@ -168,11 +167,12 @@ module.exports = class BGraph {
                     let nextListNode = dataList[pos].ref;
                     let prevListNode = nextListNode.prev;
 
-                    if(prevListNode !== undefined)
+                    if(prevListNode !== undefined && prevListNode.key !== undefined)
                     {
                         prevListNode.next = newListNode;
                         newListNode.prev = prevListNode;
                     }
+                    else this.start = newListNode;
 
                     nextListNode.prev = newListNode;
                     newListNode.next = nextListNode;
