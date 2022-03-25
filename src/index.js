@@ -591,9 +591,67 @@ module.exports = class BGraph {
         return JSON.stringify(result);
     }
 
+    serializeToObj()
+    {
+        let size = this.size;
+        let listNode = this.start;
+        let list = {};
+        let tracker;
+        list.key = listNode.key;
+        list.value = listNode.value;
+        list.next = {};
+        tracker = list.next;
+        listNode = listNode.next;
+
+        for(let i = 1; i < size; i++)
+        {
+            if(listNode === undefined) break;
+
+            tracker.key = listNode.key;
+            tracker.value = listNode.value;
+
+            if(i < size - 1) tracker.next = {};
+
+            tracker = tracker.next;
+            listNode = listNode.next;
+        }
+
+        let result = {};
+        result.order = this.order;
+        result.size = size;
+        result.height = this.height;
+        result.list = JSON.parse(JSON.stringify(list, ['next', 'key', 'value']));
+        result.btree = JSON.parse(JSON.stringify(this.root, ['dataList', 'children', 'isLeaf', 'key']));
+        return result;
+    }
+
     deserialize(string)
     {
         let data = JSON.parse(string);
+        this.order = data.order;
+        this.size = data.size;
+        this.height = data.height;
+        this.start = data.list;
+        this.root = data.btree;
+        let listNode = this.start;
+        let prevNode = undefined;
+
+        for(let i = 0; i < this.size; i++)
+        {
+            listNode.prev = prevNode;
+            this.connectRef(listNode);
+
+            if(listNode.next === undefined) this.end = listNode;
+            
+            prevNode = listNode;
+            listNode = listNode.next;
+        }
+    }
+
+    deserializeFromObj(data)
+    {
+        if(!data || data === null || data === undefined) return false;
+        
         this.order = data.order;
         this.size = data.size;
         this.height = data.height;
