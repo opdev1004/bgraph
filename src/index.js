@@ -560,6 +560,9 @@ module.exports = class BGraph {
     serialize()
     {
         let size = this.size;
+
+        if(size == 0) return false;
+
         let listNode = this.start;
         let list = {};
         let tracker;
@@ -594,6 +597,9 @@ module.exports = class BGraph {
     serializeToObj()
     {
         let size = this.size;
+
+        if(size == 0) return false;
+        
         let listNode = this.start;
         let list = {};
         let tracker;

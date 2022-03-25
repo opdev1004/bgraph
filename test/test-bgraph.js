@@ -13,6 +13,9 @@ function test()
         order: 5
     }
     const bgraph = new BGraph(option);
+
+    console.log(bgraph.serialize());
+
     console.log(bgraph.order);
     bgraph.insert("a", "a");
     bgraph.insert("b", "b");
