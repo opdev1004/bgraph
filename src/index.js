@@ -16,7 +16,7 @@ module.exports = class BGraph {
     {   
         let tempNode = this.root;
 
-        if(!key || !tempNode) return false;
+        if(!key || typeof key !== 'string' || !tempNode) return undefined;
 
         let height = this.height;
         let nextNodeIndex = 0;
@@ -45,14 +45,14 @@ module.exports = class BGraph {
             tempNode = tempNode.children[nextNodeIndex];
         }
 
-        return false;
+        return undefined;
     }
 
     searchRange(key, range, position = 0)
     {
         let tempNode = this.root;
 
-        if(!key || !tempNode) return false;
+        if(!key || typeof key !== 'string' || !tempNode) return undefined;
 
         let height = this.height;
         let nextNodeIndex = 0;
@@ -99,12 +99,12 @@ module.exports = class BGraph {
             tempNode = tempNode.children[nextNodeIndex];
         }
 
-        return [];
+        return undefined;
     }
 
     insert(key, value)
     {
-        if(!key || !value) return false;
+        if(!key || typeof key !== 'string') return false;
 
         let data = new BGraphData();
         data.key = key;
@@ -206,6 +206,8 @@ module.exports = class BGraph {
             indexes.push(nextNodeIndex);
             tempNode = tempNode.children[nextNodeIndex];
         }
+
+        return false;
     }
 
     splitRoot(node)
@@ -360,7 +362,7 @@ module.exports = class BGraph {
         let indexes = [0];
         let parents = [];
 
-        if(!key || !tempNode) return false;
+        if(!key || typeof key !== 'string' || !tempNode) return false;
 
         for(let i = 0; i < height; i++)
         {
@@ -380,7 +382,6 @@ module.exports = class BGraph {
                     this.deleteFromNode(tempNode, j, parents, indexes);
                     return true;
                 }
-
             }
 
             if(tempNode.isLeaf) return false;
@@ -389,6 +390,8 @@ module.exports = class BGraph {
             indexes.push(nextNodeIndex);
             tempNode = tempNode.children[nextNodeIndex];
         }
+
+        return false;
     }
 
 
@@ -590,7 +593,7 @@ module.exports = class BGraph {
     {
         let size = this.size;
 
-        if(size == 0) return false;
+        if(size == 0) return null;
 
         let listNode = this.start;
         let list = {};
@@ -627,7 +630,7 @@ module.exports = class BGraph {
     {
         let size = this.size;
 
-        if(size == 0) return false;
+        if(size == 0) return null;
         
         let listNode = this.start;
         let list = {};
