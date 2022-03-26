@@ -36,9 +36,7 @@ module.exports = class BGraph {
 
                 if(compareResult == 0) 
                 {
-                    let value = data.ref.value;
-                    if(value) return value;
-                    else return false;
+                    return data.ref.value;
                 }
                 else if(compareResult > 0) break;
                 else if(compareResult < 0) nextNodeIndex = nextNodeIndex + 1;
