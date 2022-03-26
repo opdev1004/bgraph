@@ -7,7 +7,6 @@ function getBinarySize(string) {
 
 function test()
 {
-    
     console.time("BGraph");
     const option = {
         order: 5
@@ -30,7 +29,7 @@ function test()
     bgraph.delete("a");
     bgraph.delete("f");
     bgraph.insert("g", "g");
-    let serializedGraph = bgraph.serialize();
+    //let serializedGraph = bgraph.serialize();
     bgraph.insert("h", "h");
     bgraph.insert("i", "i");
     bgraph.insert("j", "j");
@@ -47,10 +46,15 @@ function test()
     bgraph.delete("o");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
-    
-    bgraph.deserialize(serializedGraph);
 
-    
+    bgraph.update("b", "bbb");
+
+    let list = bgraph.searchRange("a", 6, 1);
+    console.log(list);
+
+    //bgraph.deserialize(serializedGraph);
+
+    /*
     let size = bgraph.size;
     let start = bgraph.start;
 
@@ -87,7 +91,7 @@ function test()
 
     console.log(serializedBgraph2 == bgraph2.serialize(bgraph2.deserialize(serializedBgraph2)));
     console.log(getBinarySize(serializedBgraph2));
-    
+    */
 }
 
 

@@ -50,7 +50,9 @@ for(let i = 0; i < size; i++)
 
 console.log("Search: ", bgraph.search("d"));
 
-let result = bgraph.searchRange("b", 7);
+bgraph.update("b", "bb");
+
+let result = bgraph.searchRange("b", 7, 0);
 for(let data of result)
 {
     console.log("key: ", data.key, "value: ", data.value);
@@ -77,7 +79,7 @@ d
 e
 g
 Search:  d
-key:  b value:  b
+key:  b value:  bb
 key:  c value:  c
 key:  d value:  d
 key:  e value:  e

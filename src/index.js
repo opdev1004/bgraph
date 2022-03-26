@@ -50,25 +50,11 @@ module.exports = class BGraph {
         return false;
     }
 
-    searchRange(key, number)
+    searchRange(key, range, position = 0)
     {
         let tempNode = this.root;
 
         if(!key || !tempNode) return false;
-        if(this.compareKey(this.start.key, key))
-        {
-            let result = [];
-            let listNode = this.start;
-
-            for(let k = 0; k < number; k++)
-            {
-                result.push({key: listNode.key, value: listNode.value});
-                if(listNode.next === undefined) break;
-                else listNode = listNode.next;
-            }
-
-            return result;
-        }
 
         let height = this.height;
         let nextNodeIndex = 0;
@@ -91,9 +77,17 @@ module.exports = class BGraph {
                     let result = [];
                     let listNode = data.ref;
                     
-                    for(let k = 0; k < number; k++)
+                    for(let k = 0; k < position; k++)
+                    {
+                        listNode = listNode.next;
+
+                        if(listNode === undefined) return [];
+                    }
+
+                    for(let k = 0; k < range; k++)
                     {
                         result.push({key: listNode.key, value: listNode.value});
+                        
                         if(listNode.next === undefined) break;
                         else listNode = listNode.next;
                     }
@@ -107,12 +101,12 @@ module.exports = class BGraph {
             tempNode = tempNode.children[nextNodeIndex];
         }
 
-        return false;
+        return [];
     }
 
     insert(key, value)
     {
-        if(!key || !value || this.size === Number.MAX_SAFE_INTEGER) return false;
+        if(!key || !value) return false;
 
         let data = new BGraphData();
         data.key = key;
@@ -321,6 +315,43 @@ module.exports = class BGraph {
                 this.splitRoot(parents[0]);
             }
         }
+    }
+
+    update(key, value)
+    {
+        let tempNode = this.root;
+
+        if(!key || !tempNode) return false;
+
+        let height = this.height;
+        let nextNodeIndex = 0;
+
+        for(let i = 0; i < height; i++)
+        {
+            let dataList = tempNode.dataList;
+            let dataListSize = dataList.length;
+
+            for(let j = 0; j < dataListSize; j++)
+            {
+                nextNodeIndex = j;
+                let data = dataList[j];
+                let dataKey = data.key;
+
+                let compareResult = this.compareKey(dataKey, key);
+
+                if(compareResult == 0) 
+                {
+                    data.ref.value = value;
+                    return true;
+                }
+                else if(compareResult > 0) break;
+                else if(compareResult < 0) nextNodeIndex = nextNodeIndex + 1;
+            }
+            
+            tempNode = tempNode.children[nextNodeIndex];
+        }
+
+        return false;
     }
 
     delete(key)
