@@ -621,7 +621,7 @@ module.exports = class BGraph {
         result.order = this.order;
         result.size = size;
         result.height = this.height;
-        result.list = JSON.parse(JSON.stringify(list, ['next', 'key', 'value']));
+        result.list = list;
         result.btree = JSON.parse(JSON.stringify(this.root, ['dataList', 'children', 'isLeaf', 'key']));
         return JSON.stringify(result);
     }
@@ -658,7 +658,7 @@ module.exports = class BGraph {
         result.order = this.order;
         result.size = size;
         result.height = this.height;
-        result.list = JSON.parse(JSON.stringify(list, ['next', 'key', 'value']));
+        result.list = list;
         result.btree = JSON.parse(JSON.stringify(this.root, ['dataList', 'children', 'isLeaf', 'key']));
         return result;
     }

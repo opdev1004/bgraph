@@ -47,10 +47,17 @@ function test()
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
 
+    console.log("=============================");
+    console.log(bgraph.serialize());
+    console.log("=============================");
+
     bgraph.update("b", "bbb");
 
     let list = bgraph.searchRange("a", 6, 1);
     console.log(list);
+
+    console.log("=============================");
+    console.log(bgraph.serializeToObj());
 
     //bgraph.deserialize(serializedGraph);
 
