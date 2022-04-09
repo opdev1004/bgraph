@@ -29,12 +29,14 @@ function test()
     bgraph.delete("a");
     bgraph.delete("f");
     bgraph.insert("g", "g");
+    bgraph.insert("hiwork", "dogo");
     //let serializedGraph = bgraph.serialize();
     bgraph.insert("h", "h");
     bgraph.insert("i", "i");
     bgraph.insert("j", "j");
     bgraph.insert("k", "k");
     bgraph.insert("l", "l");
+    bgraph.insert("itworks", "dogogo");
     bgraph.insert("m", "m");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
@@ -43,6 +45,7 @@ function test()
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
     bgraph.insert("a", "a");
+    bgraph.insert("goodwork", "doooogo");
     bgraph.delete("o");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
@@ -53,7 +56,14 @@ function test()
 
     bgraph.update("b", "bbb");
 
-    let list = bgraph.searchRange("a", 6, 1);
+    
+
+    //let list = bgraph.searchRange("a", 6, 1);
+    let list = bgraph.searchKeyContains("work", 2);
+    console.log(list);
+    list = bgraph.searchKeyContains("work", 2, 1, "hiwork");
+    console.log(list);
+    list = bgraph.searchValueContains("go", 3);
     console.log(list);
 
     console.log("=============================");

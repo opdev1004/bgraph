@@ -48,7 +48,7 @@ module.exports = class BGraph {
         return undefined;
     }
 
-    searchRange(key, range, position = 0)
+    searchRange(key, total, position = 0)
     {
         let tempNode = this.root;
 
@@ -82,7 +82,7 @@ module.exports = class BGraph {
                         if(listNode === undefined) return [];
                     }
 
-                    for(let k = 0; k < range; k++)
+                    for(let k = 0; k < total; k++)
                     {
                         result.push({key: listNode.key, value: listNode.value});
                         
@@ -91,6 +91,132 @@ module.exports = class BGraph {
                     }
 
                     return result;
+                }
+                else if(compareResult > 0) break;
+                else if(compareResult < 0) nextNodeIndex = nextNodeIndex + 1;
+            }
+            
+            tempNode = tempNode.children[nextNodeIndex];
+        }
+
+        return [];
+    }
+
+    searchKeyContains(substring, total, position = 0, lastKey = "")
+    {
+        if(!substring || typeof substring !== 'string') return undefined;
+        if(lastKey === "")
+        {
+            return this.searchKeyContainsFromListNode(this.start, substring, total, position);
+        }
+        else
+        {
+            let listNode = this.searchListNode(lastKey);
+            return this.searchKeyContainsFromListNode(listNode, substring, total, position);
+        }
+    }
+
+    searchKeyContainsFromListNode(listNode, substring, total, position)
+    {
+        let tempNode = listNode;
+
+        if(!tempNode) return undefined;
+
+        let result = [];
+        let count = 0;
+        let positionCount = 0;
+
+        while(tempNode !== undefined && tempNode.key !== undefined)
+        {
+            let key = tempNode.key;
+            
+            if(key.includes(substring))
+            {
+                if(positionCount >= position)
+                {
+                    result.push({key: key, value: tempNode.value});
+                    count++;
+                }
+                else positionCount++;
+            }
+            if(count >= total) return result;
+
+            tempNode = tempNode.next;
+        }
+
+        return result;
+    }
+
+    searchValueContains(substring, total, position = 0,  lastKey = "")
+    {
+        if(!substring || typeof substring !== 'string') return undefined;
+        if(lastKey === "")
+        {
+            return this.searchValueContainsFromListNode(this.start, substring, total, position);
+        }
+        else
+        {
+            let listNode = this.searchListNode(lastKey);
+            return this.searchValueContainsFromListNode(listNode, substring, total, position);
+        }
+    }
+
+    searchValueContainsFromListNode(listNode, substring, total, position)
+    {
+        let tempNode = listNode;
+
+        if(!tempNode) return undefined;
+
+        let result = [];
+        let count = 0;
+        let positionCount = 0;
+
+        while(tempNode !== undefined)
+        {
+            let value = tempNode.value;
+            
+            if(value.includes(substring))
+            {
+                if(positionCount >= position)
+                {
+                    result.push({key: tempNode.key, value: value});
+                    count++;
+                }
+                else positionCount++;
+            }
+            if(count >= total) return result;
+
+            tempNode = tempNode.next;
+        }
+
+        return result;
+    }
+
+    searchListNode(key)
+    {   
+        let tempNode = this.root;
+
+        if(!key || typeof key !== 'string' || !tempNode) return undefined;
+
+        let height = this.height;
+        let nextNodeIndex = 0;
+
+        for(let i = 0; i < height; i++)
+        {
+            let dataList = tempNode.dataList;
+            let dataListSize = dataList.length;
+
+            for(let j = 0; j < dataListSize; j++)
+            {
+                nextNodeIndex = j;
+                let data = dataList[j];
+                let dataKey = data.key;
+
+                let compareResult = this.compareKey(dataKey, key);
+
+                if(compareResult == 0) 
+                {
+                    return data.ref;
                 }
                 else if(compareResult > 0) break;
                 else if(compareResult < 0) nextNodeIndex = nextNodeIndex + 1;

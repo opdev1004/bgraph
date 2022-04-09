@@ -87,6 +87,79 @@ key:  g value:  g
 BGraph: 49.267ms
 ```
 
+## 📖 Simple document
+| function | ``` search(key)  ``` | 
+| - | - |
+| description | This function is for searching value of key that is stored in b-graph  |
+| arg: key | string |
+| return | return value if it is found otherwise it will return undefined |
+
+| function | ``` searchRange(key, total, position)  ``` | 
+| - | - |
+| description | This function is for getting list of data from where the key at. |
+| arg: key | string |
+| arg: total | number, number of data to grab |
+| arg: position | number, number to skip data |
+| return | return filled list when data exist, return empty list for when it couldn't find, otherwise return undefined such as for the case that root node does not exist or key isn't string type |
+
+| function | ``` searchKeyContains(substring, total, position, lastKey)  ``` | 
+| - | - |
+| description | This function is for finding list of data that its key contains substring. |
+| arg: substring | string |
+| arg: total | number, number of data to grab |
+| arg: position | number, number to skip data |
+| arg: lastKey | string, last key where it should start search from |
+| return | return list of data, if root node does not exist it will return undefined |
+
+| function | ``` searchValueContains(substring, total, position, lastKey)  ``` | 
+| - | - |
+| description | This function is for finding list of data that its value contains substring. |
+| arg: substring | string |
+| arg: total | number, number of data to grab |
+| arg: position | number, number to skip data |
+| arg: lastKey | string, last key where it should start search from |
+| return | return list of data, if root node does not exist it will return undefined |
+
+| function | ``` insert(key, value)  ``` | 
+| - | - |
+| description | This function inserts data into b-graph |
+| arg: key | string, name of value |
+| arg: value | anything but recommend the value that can be JSON.stringfy() |
+| return | false for failure of inserting data, true for success  |
+
+| function | ``` update(key, value)  ``` | 
+| - | - |
+| description | TThis function updates data into b-graph |
+| arg: key | string, name of value |
+| arg: value | new value. anything but recommend the value that can be JSON.stringfy() |
+| return | false for failure of updating data, true for success  |
+
+| function | ``` delete(key)  ``` | 
+| - | - |
+| description | This function deletes the key of data from b-graph |
+| arg: key | string, name of value |
+| return | false for failure of deleting data, true for success  |
+
+| function | ``` serialize() ``` | 
+| - | - |
+| description | serialize b-graph to string. |
+| return | string, serialized b-graph |
+
+| function | ``` deserialize(string) ``` | 
+| - | - |
+| description | deserialize string b-graph data. |
+| arg: string | string, serialized b-graph |
+
+| function | ``` serializeToObj() ``` | 
+| - | - |
+| description | serialize b-graph to object. |
+| return | object, serialized b-graph object |
+
+| function | ``` deserializeFromObj(data) ``` | 
+| - | - |
+| description | deserialize object b-graph data. |
+| arg: data | object, serialized b-graph object |
+
 
 ## 👨‍💻 Author
 [Victor Chanil Park](https://github.com/opdev1004)
