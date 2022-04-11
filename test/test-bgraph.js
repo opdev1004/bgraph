@@ -58,7 +58,10 @@ function test()
 
     
 
-    //let list = bgraph.searchRange("a", 6, 1);
+    let list = bgraph.searchRangeBackward("n", 6, 1);
+    console.log(list);
+
+    /*
     let list = bgraph.searchKeyContains("work", 2);
     console.log(list);
     list = bgraph.searchKeyContains("work", 2, 1, "hiwork");
@@ -68,7 +71,7 @@ function test()
 
     console.log("=============================");
     console.log(bgraph.serializeToObj());
-
+    */
     //bgraph.deserialize(serializedGraph);
 
     /*

@@ -102,6 +102,60 @@ module.exports = class BGraph {
         return [];
     }
 
+    searchRangeBackward(key, total, position = 0)
+    {
+        let tempNode = this.root;
+
+        if(!key || typeof key !== 'string' || !tempNode) return undefined;
+
+        let height = this.height;
+        let nextNodeIndex = 0;
+
+        for(let i = 0; i < height; i++)
+        {
+            let dataList = tempNode.dataList;
+            let dataListSize = dataList.length;
+
+            for(let j = 0; j < dataListSize; j++)
+            {
+                nextNodeIndex = j;
+                let data = dataList[j];
+                let dataKey = data.key;
+
+                let compareResult = this.compareKey(dataKey, key);
+
+                if(compareResult == 0) 
+                {
+                    let result = [];
+                    let listNode = data.ref;
+                    
+                    for(let k = 0; k < position; k++)
+                    {
+                        listNode = listNode.prev;
+
+                        if(listNode === undefined) return [];
+                    }
+
+                    for(let k = 0; k < total; k++)
+                    {
+                        result.splice(0, 0, {key: listNode.key, value: listNode.value});
+                        
+                        if(listNode.prev === undefined) break;
+                        else listNode = listNode.prev;
+                    }
+
+                    return result;
+                }
+                else if(compareResult > 0) break;
+                else if(compareResult < 0) nextNodeIndex = nextNodeIndex + 1;
+            }
+            
+            tempNode = tempNode.children[nextNodeIndex];
+        }
+
+        return [];
+    }
+
     searchKeyContains(substring, total, position = 0, lastKey = "")
     {
         if(!substring || typeof substring !== 'string') return undefined;

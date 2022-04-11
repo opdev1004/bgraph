@@ -102,6 +102,14 @@ BGraph: 49.267ms
 | arg: position | number, number to skip data |
 | return | return filled list when data exist, return empty list for when it couldn't find, otherwise return undefined such as for the case that root node does not exist or key isn't string type |
 
+| function | ``` searchRangeBackward(key, total, position)  ``` | 
+| - | - |
+| description | This function is for getting list of data from where the key at. It adds data backward. |
+| arg: key | string |
+| arg: total | number, number of data to grab |
+| arg: position | number, number to skip data |
+| return | return filled list when data exist, return empty list for when it couldn't find, otherwise return undefined such as for the case that root node does not exist or key isn't string type |
+
 | function | ``` searchKeyContains(substring, total, position, lastKey)  ``` | 
 | - | - |
 | description | This function is for finding list of data that its key contains substring. |
