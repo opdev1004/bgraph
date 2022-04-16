@@ -61,6 +61,9 @@ function test()
     let list = bgraph.searchRangeBackward("n", 6, 1);
     console.log(list);
 
+    list = bgraph.getAllKeys();
+    console.log(list);
+
     /*
     let list = bgraph.searchKeyContains("work", 2);
     console.log(list);

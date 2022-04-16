@@ -148,6 +148,11 @@ BGraph: 49.267ms
 | arg: key | string, name of value |
 | return | false for failure of deleting data, true for success  |
 
+| function | ``` getAllKeys()  ``` | 
+| - | - |
+| description | This function gets all the keys |
+| return | returns array list of keys, it can be empty |
+
 | function | ``` serialize() ``` | 
 | - | - |
 | description | serialize b-graph to string. |
