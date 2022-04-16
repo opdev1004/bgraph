@@ -3,11 +3,11 @@ const BGraphNode = require('./bgraphnode.js');
 const ListNode = require('./listnode.js');
 
 module.exports = class BGraph {
-    constructor(option={order: 3}) {
+    constructor(order = 5) {
         this.root;
         this.start;
         this.end;
-        this.order = option.order;
+        this.order = order;
         this.size = 0;
         this.height = 1;
     }
@@ -771,9 +771,13 @@ module.exports = class BGraph {
 
     serialize()
     {
+        let result = {};
         let size = this.size;
+        result.order = this.order;
+        result.size = size;
+        result.height = this.height;
 
-        if(size == 0) return null;
+        if(size == 0) return JSON.stringify(result);
 
         let listNode = this.start;
         let list = {};
@@ -797,10 +801,6 @@ module.exports = class BGraph {
             listNode = listNode.next;
         }
 
-        let result = {};
-        result.order = this.order;
-        result.size = size;
-        result.height = this.height;
         result.list = list;
         result.btree = JSON.parse(JSON.stringify(this.root, ['dataList', 'children', 'isLeaf', 'key']));
         return JSON.stringify(result);
@@ -808,9 +808,13 @@ module.exports = class BGraph {
 
     serializeToObj()
     {
+        let result = {};
         let size = this.size;
+        result.order = this.order;
+        result.size = size;
+        result.height = this.height;
 
-        if(size == 0) return null;
+        if(size == 0) return result;
         
         let listNode = this.start;
         let list = {};
@@ -834,10 +838,6 @@ module.exports = class BGraph {
             listNode = listNode.next;
         }
 
-        let result = {};
-        result.order = this.order;
-        result.size = size;
-        result.height = this.height;
         result.list = list;
         result.btree = JSON.parse(JSON.stringify(this.root, ['dataList', 'children', 'isLeaf', 'key']));
         return result;
@@ -849,6 +849,15 @@ module.exports = class BGraph {
         this.order = data.order;
         this.size = data.size;
         this.height = data.height;
+        
+        if(data.size == 0)
+        {
+            this.root = undefined;
+            this.start = undefined;
+            this.end = undefined;
+            return;
+        }
+
         this.start = data.list;
         this.root = data.btree;
         let listNode = this.start;
@@ -873,6 +882,15 @@ module.exports = class BGraph {
         this.order = data.order;
         this.size = data.size;
         this.height = data.height;
+
+        if(data.size == 0)
+        {
+            this.root = undefined;
+            this.start = undefined;
+            this.end = undefined;
+            return;
+        }
+
         this.start = data.list;
         this.root = data.btree;
         let listNode = this.start;

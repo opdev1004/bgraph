@@ -8,10 +8,7 @@ function getBinarySize(string) {
 function test()
 {
     console.time("BGraph");
-    const option = {
-        order: 5
-    }
-    const bgraph = new BGraph(option);
+    const bgraph = new BGraph(5);
 
     console.log(bgraph.serialize());
 
