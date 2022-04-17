@@ -322,11 +322,16 @@ module.exports = class BGraph {
                 {
                     let prevListNode = dataList[pos - 1].ref;
                     let nextListNode = prevListNode.next;
+
+                    if(prevListNode !== undefined && prevListNode.key !== undefined) if(prevListNode.key === key) return false;
+                    if(nextListNode !== undefined && nextListNode.key !== undefined) if(nextListNode.key === key) return false;
+
                     prevListNode.next = newListNode;
                     newListNode.prev = prevListNode;
 
                     if(nextListNode !== undefined && nextListNode.key !== undefined)
                     {
+
                         nextListNode.prev = newListNode;
                         newListNode.next = nextListNode;
                     }
@@ -339,6 +344,8 @@ module.exports = class BGraph {
                     let nextListNode = dataList[pos].ref;
                     let prevListNode = nextListNode.prev;
 
+                    if(prevListNode !== undefined && prevListNode.key !== undefined) if(prevListNode.key === key) return false;
+                    if(nextListNode !== undefined && nextListNode.key !== undefined) if(nextListNode.key === key) return false;
                     if(prevListNode !== undefined && prevListNode.key !== undefined)
                     {
                         prevListNode.next = newListNode;

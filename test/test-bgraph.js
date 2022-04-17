@@ -15,8 +15,15 @@ function test()
     console.log(bgraph.order);
     bgraph.insert("a", "a");
     bgraph.delete("a", "a");
-    
-    /*
+    bgraph.insert("a", "a");
+    bgraph.insert("a", "a");
+    bgraph.insert("a", "a");
+    bgraph.insert("a", "a");
+    bgraph.insert("a", "a");
+    bgraph.insert("a", "a");
+
+    console.log(bgraph.serialize());
+
     bgraph.insert("b", "b");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
@@ -55,16 +62,20 @@ function test()
     console.log("=============================");
 
     bgraph.update("b", "bbb");
-
+    bgraph.insert("h", "h");
+    bgraph.insert("h", "h");
+    bgraph.insert("h", "h");
+    bgraph.insert("h", "h");
+    console.log("=============================");
+    console.log(bgraph.serialize());
     
-
+    /*
     let list = bgraph.searchRangeBackward("n", 6, 1);
     console.log(list);
 
     list = bgraph.getAllKeys();
     console.log(list);
     */
-
     /*
     let list = bgraph.searchKeyContains("work", 2);
     console.log(list);
