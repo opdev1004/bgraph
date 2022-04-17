@@ -14,6 +14,9 @@ function test()
 
     console.log(bgraph.order);
     bgraph.insert("a", "a");
+    bgraph.delete("a", "a");
+    
+    /*
     bgraph.insert("b", "b");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
@@ -60,6 +63,7 @@ function test()
 
     list = bgraph.getAllKeys();
     console.log(list);
+    */
 
     /*
     let list = bgraph.searchKeyContains("work", 2);

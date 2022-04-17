@@ -544,6 +544,20 @@ module.exports = class BGraph {
 
         if(!key || typeof key !== 'string' || !tempNode) return false;
 
+        if(this.size == 1)
+        {
+            if(this.start.key === key)
+            {
+                this.root = undefined;
+                this.start = undefined;
+                this.end = undefined;
+                this.size = 0;
+                this.height = 1;
+                return true;
+            }
+            else return false;
+        }
+
         for(let i = 0; i < height; i++)
         {
             let dataList = tempNode.dataList;
