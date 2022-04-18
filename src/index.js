@@ -978,6 +978,7 @@ module.exports = class BGraph {
 
         while(tempNode !== undefined)
         {
+            if(tempNode.key === undefined) break;
             result.push(tempNode.key);
             tempNode = tempNode.next;
         }
@@ -995,6 +996,7 @@ module.exports = class BGraph {
 
         while(tempNode !== undefined)
         {
+            if(tempNode.value === undefined ) break;
             result.push(tempNode.value);
             tempNode = tempNode.next;
         }
@@ -1012,6 +1014,7 @@ module.exports = class BGraph {
 
         while(tempNode !== undefined)
         {
+            if(tempNode.key === undefined || tempNode.value === undefined ) break;
             result.push({key: tempNode.key, value: tempNode.value});
             tempNode = tempNode.next;
         }
