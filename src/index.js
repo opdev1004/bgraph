@@ -985,6 +985,40 @@ module.exports = class BGraph {
         return result;
     }
 
+    getAllValues()
+    {
+        let tempNode = this.start;
+        
+        if(!tempNode) return [];
+
+        let result = [];
+
+        while(tempNode !== undefined)
+        {
+            result.push(tempNode.value);
+            tempNode = tempNode.next;
+        }
+
+        return result;
+    }
+
+    getAll()
+    {
+        let tempNode = this.start;
+        
+        if(!tempNode) return [];
+
+        let result = [];
+
+        while(tempNode !== undefined)
+        {
+            result.push({key: tempNode.key, value: tempNode.value});
+            tempNode = tempNode.next;
+        }
+
+        return result;
+    }
+
     compareKey(key1, key2)
     {
         return key1.localeCompare(key2);

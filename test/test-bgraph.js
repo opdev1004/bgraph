@@ -69,13 +69,19 @@ function test()
     console.log("=============================");
     console.log(bgraph.serialize());
     
-    /*
+    
     let list = bgraph.searchRangeBackward("n", 6, 1);
     console.log(list);
-
+    console.log("=============================");
     list = bgraph.getAllKeys();
     console.log(list);
-    */
+    console.log("=============================");
+    list = bgraph.getAllValues();
+    console.log(list);
+    console.log("=============================");
+    list = bgraph.getAll();
+    console.log(list);
+    console.log("=============================");
     /*
     let list = bgraph.searchKeyContains("work", 2);
     console.log(list);

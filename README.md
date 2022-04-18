@@ -150,8 +150,18 @@ BGraph: 49.267ms
 
 | function | ``` getAllKeys()  ``` | 
 | - | - |
-| description | This function gets all the keys |
-| return | returns array list of keys, it can be empty |
+| description | This function returns a list of all keys |
+| return | returns list of key, it can be empty |
+
+| function | ``` getAllValues()  ``` | 
+| - | - |
+| description | This function returns a list of all values |
+| return | returns list of value, it can be empty |
+
+| function | ``` getAll()  ``` | 
+| - | - |
+| description | This function returns a list of all data |
+| return | returns list of data, it can be empty |
 
 | function | ``` serialize() ``` | 
 | - | - |
