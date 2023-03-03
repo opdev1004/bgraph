@@ -1,6 +1,6 @@
 {
   "name": "bgraph",
-  "version": "1.0.17",
+  "version": "1.1.0",
   "description": "B-Graph. B-Tree that can perform ranged search.",
   "main": "dist/index.js",
   "bin": "dist/index.js",

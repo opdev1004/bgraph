@@ -1,85 +1,86 @@
 const BGraph = require('../src/index.js')
 const Buffer = require('buffer').Buffer;
 
-function getBinarySize(string) {
+async function getBinarySize(string)
+{
     return Buffer.byteLength(string, 'utf8');
 }
 
-function test()
+async function test()
 {
     console.time("BGraph");
     const bgraph = new BGraph(5);
 
-    console.log(bgraph.serialize());
+    console.log(await bgraph.serialize());
 
     console.log(bgraph.order);
-    bgraph.insert("a", "a");
-    bgraph.delete("a", "a");
-    bgraph.insert("a", "a");
-    bgraph.insert("a", "a");
-    bgraph.insert("a", "a");
-    bgraph.insert("a", "a");
-    bgraph.insert("a", "a");
-    bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.delete("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("a", "a");
 
-    console.log(bgraph.serialize());
+    console.log(await bgraph.serialize());
 
-    bgraph.insert("b", "b");
+    await bgraph.insert("b", "b");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
-    bgraph.insert("c", "c");
+    await bgraph.insert("c", "c");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
-    bgraph.insert("d", "d");
-    bgraph.insert("e", "e");
-    bgraph.insert("f", "f");
-    bgraph.delete("a");
-    bgraph.delete("f");
-    bgraph.insert("g", "g");
-    bgraph.insert("hiwork", "dogo");
+    await bgraph.insert("d", "d");
+    await bgraph.insert("e", "e");
+    await bgraph.insert("f", "f");
+    await bgraph.delete("a");
+    await bgraph.delete("f");
+    await bgraph.insert("g", "g");
+    await bgraph.insert("hiwork", "dogo");
     //let serializedGraph = bgraph.serialize();
-    bgraph.insert("h", "h");
-    bgraph.insert("i", "i");
-    bgraph.insert("j", "j");
-    bgraph.insert("k", "k");
-    bgraph.insert("l", "l");
-    bgraph.insert("itworks", "dogogo");
-    bgraph.insert("m", "m");
+    await bgraph.insert("h", "h");
+    await bgraph.insert("i", "i");
+    await bgraph.insert("j", "j");
+    await bgraph.insert("k", "k");
+    await bgraph.insert("l", "l");
+    await bgraph.insert("itworks", "dogogo");
+    await bgraph.insert("m", "m");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
-    bgraph.insert("n", "n");
-    bgraph.insert("o", "o");
+    await bgraph.insert("n", "n");
+    await bgraph.insert("o", "o");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
-    bgraph.insert("a", "a");
-    bgraph.insert("goodwork", "doooogo");
-    bgraph.delete("o");
+    await bgraph.insert("a", "a");
+    await bgraph.insert("goodwork", "doooogo");
+    await bgraph.delete("o");
     console.log("start: ", bgraph.start.key);
     console.log("end: ", bgraph.end.key);
 
     console.log("=============================");
-    console.log(bgraph.serialize());
+    await console.log(bgraph.serialize());
     console.log("=============================");
 
-    bgraph.update("b", "bbb");
-    bgraph.insert("h", "h");
-    bgraph.insert("h", "h");
-    bgraph.insert("h", "h");
-    bgraph.insert("h", "h");
+    await bgraph.update("b", "bbb");
+    await bgraph.insert("h", "h");
+    await bgraph.insert("h", "h");
+    await bgraph.insert("h", "h");
+    await bgraph.insert("h", "h");
     console.log("=============================");
     console.log(bgraph.serialize());
-    
-    
-    let list = bgraph.searchRangeBackward("n", 6, 1);
+
+
+    let list = await bgraph.searchRangeBackward("n", 6, 1);
     console.log(list);
     console.log("=============================");
-    list = bgraph.getAllKeys();
+    list = await bgraph.getAllKeys();
     console.log(list);
     console.log("=============================");
-    list = bgraph.getAllValues();
+    list = await bgraph.getAllValues();
     console.log(list);
     console.log("=============================");
-    list = bgraph.getAll();
+    list = await bgraph.getAll();
     console.log(list);
     console.log("=============================");
     /*
@@ -95,53 +96,55 @@ function test()
     */
     //bgraph.deserialize(serializedGraph);
 
-    /*
+
     let size = bgraph.size;
     let start = bgraph.start;
 
     console.log(start);
 
-    for(let i = 0; i < size; i++)
+    for (let i = 0; i < size; i++)
     {
         console.log(start.value);
         start = start.next;
     }
 
-    console.log("Search: ", bgraph.search("d"));
+    console.log("Search: ", await bgraph.search("d"));
 
-    let result = bgraph.searchRange("b", 7);
-    for(let data of result)
+    let result = await bgraph.searchRange("b", 7);
+    for (let data of result)
     {
         console.log("key: ", data.key, "value: ", data.value);
     }
 
     console.timeEnd("BGraph");
-    
-    const bgraph2 = new BGraph({order: 5});
 
-    for(let i = 0; i < 100; i++)
+    const bgraph2 = new BGraph(5);
+
+    for (let i = 0; i < 100; i++)
     {
         let key = i.toString();
-        let value = makeid(16);
-        bgraph2.insert(key, value);
+        let value = await makeid(8);
+        await bgraph2.insert(key, value);
     }
 
-    let serializedBgraph2 = bgraph2.serialize();
-    
-    console.log(bgraph2.serialize());
+    let serializedBgraph2 = await bgraph2.serialize();
 
-    console.log(serializedBgraph2 == bgraph2.serialize(bgraph2.deserialize(serializedBgraph2)));
-    console.log(getBinarySize(serializedBgraph2));
-    */
+    console.log(await bgraph2.serialize());
+
+    console.log(serializedBgraph2 == await bgraph2.serialize(await bgraph2.deserialize(serializedBgraph2)));
+    console.log(await getBinarySize(serializedBgraph2));
+
 }
 
 
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+async function makeid(length)
+{
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++)
+    {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }

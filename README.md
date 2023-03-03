@@ -1,6 +1,26 @@
 # B-Graph
 B-Graph. B-Tree that can perform ranged search.
 
+![B-Graph Image](https://github.com/opdev1004/bgraph/blob/master/asset/BGraph.jpg?raw=true)
+
+## 👨‍🏫 Notice
+From v.1.1.0, everything has become asynchronous and i've added mutex to protect data during any data change. I will consider adding semaphore if too many data reading cause problems.
+
+```
+const bgraph = new BGraph(5, compareKey);
+
+// It has to be asynchronous
+async compareKey(key1, key2)
+{
+  if(key1.length > key2.length) return 1;
+  else if (key1.length < key2.length) return -1;
+  else return 0;
+}
+```
+
+We also support having a fuction to compare 2 keys for ordering data in bgraph.This will let you have power to build a flexible bgraph structure that can be used to store data
+
+
 ## ▶️ install
 ```
 npm i bgraph
@@ -11,66 +31,67 @@ npm i bgraph
 ```
 const BGraph = require('./bgraph.js');
 
-console.time("BGraph");
-const bgraph = new BGraph();
-bgraph.insert("a", "a");
-bgraph.insert("b", "b");
-bgraph.insert("c", "c");
-bgraph.insert("d", "d");
-bgraph.insert("e", "e");
-bgraph.insert("f", "f");
-bgraph.delete("a");
-bgraph.delete("f");
-bgraph.insert("g", "g");
-
-let serializedGraph = bgraph.serialize();
-
-bgraph.insert("h", "h");
-bgraph.insert("i", "i");
-bgraph.insert("j", "j");
-bgraph.insert("k", "k");
-bgraph.insert("l", "l");
-bgraph.insert("m", "m");
-bgraph.insert("n", "n");
-bgraph.insert("o", "o");
-bgraph.delete("o");
-
-bgraph.deserialize(serializedGraph);
-
-let size = bgraph.size;
-let start = bgraph.start;
-
-console.log(start);
-
-for(let i = 0; i < size; i++)
+async function test()
 {
-    console.log(start.value);
-    start = start.next;
+    console.time("BGraph");
+    const bgraph = new BGraph();
+    await bgraph.insert("a", "a");
+    await bgraph.insert("b", "b");
+    await bgraph.insert("c", "c");
+    await bgraph.insert("d", "d");
+    await bgraph.insert("e", "e");
+    await bgraph.insert("f", "f");
+    await bgraph.delete("a");
+    await bgraph.delete("f");
+    await bgraph.insert("g", "g");
+    let serializedGraph = await bgraph.serialize();
+    await bgraph.insert("h", "h");
+    await bgraph.insert("i", "i");
+    await bgraph.insert("j", "j");
+    await bgraph.insert("k", "k");
+    await bgraph.insert("l", "l");
+    await bgraph.insert("m", "m");
+    await bgraph.insert("n", "n");
+    await bgraph.insert("o", "o");
+    await bgraph.delete("o");
+
+    await bgraph.deserialize(serializedGraph);
+
+    let size = bgraph.size;
+    let start = bgraph.start;
+
+    console.log(start);
+
+    for (let i = 0; i < size; i++)
+    {
+        console.log(start.value);
+        start = start.next;
+    }
+
+    console.log("Search: ", await bgraph.search("d"));
+
+    let result = await bgraph.searchRange("b", 7);
+    for (let data of result)
+    {
+        console.log("key: ", data.key, "value: ", data.value);
+    }
+
+    console.timeEnd("BGraph");
 }
 
-console.log("Search: ", bgraph.search("d"));
-
-bgraph.update("b", "bb");
-
-let result = bgraph.searchRange("b", 7, 0);
-for(let data of result)
-{
-    console.log("key: ", data.key, "value: ", data.value);
-}
-
-console.timeEnd("BGraph");
+test();
 ```
 ### Result :
 ```
 <ref *2> {
-  next: <ref *1> {
-    next: { next: [Object], key: 'd', value: 'd', prev: [Circular *1] },
-    key: 'c',
-    value: 'c',
-    prev: [Circular *2]
-  },
   key: 'b',
   value: 'b',
+  next: <ref *1> {
+    key: 'c',
+    value: 'c',
+    next: { key: 'd', value: 'd', next: [Object], prev: [Circular *1] },
+    prev: [Circular *2]
+  },
   prev: undefined
 }
 b
@@ -79,12 +100,12 @@ d
 e
 g
 Search:  d
-key:  b value:  bb
+key:  b value:  b
 key:  c value:  c
 key:  d value:  d
 key:  e value:  e
 key:  g value:  g
-BGraph: 49.267ms
+BGraph: 15.503ms
 ```
 
 ## 📖 Simple document
@@ -183,6 +204,8 @@ BGraph: 49.267ms
 | description | deserialize object b-graph data. |
 | arg: data | object, serialized b-graph object |
 
+## 💪 Sponsor 
+[Github sponsor page](https://github.com/sponsors/opdev1004)
 
 ## 👨‍💻 Author
 [Victor Chanil Park](https://github.com/opdev1004)

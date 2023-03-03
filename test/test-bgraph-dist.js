@@ -1,7 +1,8 @@
 const BGraph = require('../dist/index.js')
 const Buffer = require('buffer').Buffer;
 
-function getBinarySize(string) {
+async function getBinarySize(string)
+{
     return Buffer.byteLength(string, 'utf8');
 }
 
@@ -18,7 +19,7 @@ async function test()
     await bgraph.delete("a");
     await bgraph.delete("f");
     await bgraph.insert("g", "g");
-    let serializedGraph = bgraph.serialize();
+    let serializedGraph = await bgraph.serialize();
     await bgraph.insert("h", "h");
     await bgraph.insert("i", "i");
     await bgraph.insert("j", "j");
@@ -29,23 +30,23 @@ async function test()
     await bgraph.insert("o", "o");
     await bgraph.delete("o");
 
-    bgraph.deserialize(serializedGraph);
+    await bgraph.deserialize(serializedGraph);
 
     let size = bgraph.size;
     let start = bgraph.start;
 
     console.log(start);
 
-    for(let i = 0; i < size; i++)
+    for (let i = 0; i < size; i++)
     {
         console.log(start.value);
         start = start.next;
     }
 
-    console.log("Search: ", bgraph.search("d"));
+    console.log("Search: ", await bgraph.search("d"));
 
-    let result = bgraph.searchRange("b", 7);
-    for(let data of result)
+    let result = await bgraph.searchRange("b", 7);
+    for (let data of result)
     {
         console.log("key: ", data.key, "value: ", data.value);
     }
@@ -54,12 +55,14 @@ async function test()
 }
 
 
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+async function makeid(length)
+{
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++)
+    {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
