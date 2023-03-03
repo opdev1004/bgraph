@@ -1,7 +1,7 @@
 # B-Graph
 B-Graph. B-Tree that can perform ranged search.
 
-![B-Graph Image](https://github.com/opdev1004/bgraph/blob/master/asset/BGraph.jpg?raw=true)
+![B-Graph Image](https://github.com/opdev1004/bgraph/blob/main/asset/BGraph.jpg)
 
 ## 👨‍🏫 Notice
 From v.1.1.0, everything has become asynchronous and i've added mutex to protect data during any data change. I will consider adding semaphore if too many data reading cause problems.
